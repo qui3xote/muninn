@@ -21,6 +21,11 @@ load_dotenv()
 app = FastAPI()
 
 
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+
 @app.post("/")
 def root(event: AccountCreatedEvent):
     #   Set up Mastodon
@@ -31,12 +36,10 @@ def root(event: AccountCreatedEvent):
 
     account_id = f"@{event.object.username}"
     message = account_id + \
-        " Welcome to graphics.social! \n" \
-        "Introduce yourself to everyone by posting a toot with the #introductions hashtag. \n" \
-        "If you are new to Mastodon, you'll need to follow people to get posts in your Home timeline. \n" \
-        "You can also check out the local timeline to see what others are posting on this instance. \n" \
-        "Checkout the federated timeline to see a collection of all posts everyone on this instance follows. \n" \
-        "Reach out to our admin, brian, if you have any questions or concerns!"
+        " Welcome to StatisticallyHuman! \n" \
+        "Don't forget to set up your profile and write an #introduction post. \n" \
+        "Reach out to our admin, @thatguy, if you have any questions or concerns. \n" \
+        "New to Mastodon? Follow me (click on my name and then the follow button) and I'll help you get started!"
 
     mastodon.status_post(message, visibility='direct')
 
