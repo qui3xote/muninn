@@ -5,7 +5,8 @@ A simple Mastodon onboarding bot written in python and suitable for docker deplo
 
 This bot accepts incoming posts from the built-in Mastodon webhook for newly created and/or approved accounts. It then fires off a welcome message (fully configurable) from an authorized account. 
 
-![Screenshot 2023-03-09 at 3 52 40 PM](https://user-images.githubusercontent.com/83498383/224162109-605fdc58-010c-47a7-8a62-4b34b7523062.png)
+![welcome_screenshot](https://user-images.githubusercontent.com/83498383/224165328-fac6de68-5f24-4877-b809-425095a2854b.png)
+
 
 
 ## Installation and configuration
