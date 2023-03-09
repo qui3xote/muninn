@@ -13,3 +13,6 @@ This bot accepts incoming posts from the built-in Mastodon webhook for newly cre
 The simplest installation is to run this on docker (docker file included) and create a webhook in the 'Admin' panel on Mastodon that points to the network location of your docker instance. This could easily be adapted to heroku or other services. After that, you need to create an application on an appropriate account on your instance and use the generated api token.
 
 Configuration is done by creating a .env file in the root folder - .env.dist contain all of the required variables and example values.
+
+## Credit
+The initial code was (lightly) adapted from this delightful medium post: https://medium.com/@jaxzin/creating-a-mastodon-welcome-bot-9fe94a818506
