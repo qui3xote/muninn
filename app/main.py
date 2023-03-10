@@ -34,8 +34,6 @@ class AccountCreatedEvent(BaseModel):
 
 class NotificationEvent(BaseModel):
     notification: dict
-
-def get_connections():
     
 
 async def lifespan():
@@ -88,4 +86,5 @@ def root(event: AccountCreatedEvent, request: Request):
 
 @app.post("/listener")
 def notification(event: NotificationEvent):
+    print(f"received:{event.json()}")
     return {"message": f"Received {event.json()}"}
