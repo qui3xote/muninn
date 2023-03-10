@@ -16,15 +16,15 @@ class Status(BaseModel):
     uri: str
     url: str
     account: Account
-    in_reply_to_id: Optional(str)
-    in_reply_to_account_id: Optional(str)
+    in_reply_to_id: Optional[str]
+    in_reply_to_account_id: Optional[str]
 
 class Notification(BaseModel):
     id: str
     created_at: str
     type: str
     account: Account
-    status: Optional(Status)
+    status: Optional[Status]
 
 class AccountCreatedEvent(BaseModel):
     event: str
