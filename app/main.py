@@ -11,13 +11,6 @@ class Account(BaseModel):
     #   https://github.com/mastodon/mastodon/blob/main/app/serializers/rest/admin/account_serializer.rb
     username: str
 
-class Notification(BaseModel):
-    id: str
-    created_at: str
-    type: str
-    account: Account
-    status: Optional(Status)
-
 class Status(BaseModel):
     id: str
     uri: str
@@ -26,6 +19,12 @@ class Status(BaseModel):
     in_reply_to_id: Optional(str)
     in_reply_to_account_id: Optional(str)
 
+class Notification(BaseModel):
+    id: str
+    created_at: str
+    type: str
+    account: Account
+    status: Optional(Status)
 
 class AccountCreatedEvent(BaseModel):
     event: str
