@@ -1,10 +1,12 @@
 import os
+import logging
+from typing import Optional
 
-from mastodon import Mastodon
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from typing import Optional
+from mastodon import Mastodon
+
 
 class Account(BaseModel):
     # see AccountSerializer for the full list of properties: 
@@ -46,13 +48,16 @@ async def lifespan():
     
     muninn_listener_url = os.environ.get("MUNINN_LISTENER_URL")
     subscription_keys = app.state.mastodon.push_subscription_generate_keys()
+    logger.info(f"Got subscription_keys:{subscription_keys)}")
 
-    app.state.push_subscription_set(
+    result = app.state.push_subscription_set(
         muninn_listener_url, 
         subscription_keys,
         follow_events=True,
         mention_events=True
     )
+    logger.info(f"Subscription result:{result}")
+
 
     yield
     # do something after shutdown
@@ -60,10 +65,11 @@ async def lifespan():
 load_dotenv()
 
 app = FastAPI(lifespan=lifespan)
-
+logger = logging.getLogger('gunicorn.error')
 
 @app.get("/")
 def read_root():
+    logger.info(f"It works!")
     return {"Hello": "World"}
 
 
@@ -85,5 +91,5 @@ def root(event: AccountCreatedEvent, request: Request):
 
 @app.post("/listener")
 def notification(event: NotificationEvent):
-    print(f"received:{event.json()}")
+    logger.info(f"received:{event.json()}")
     return {"message": f"Received {event.json()}"}
