@@ -44,7 +44,7 @@ class NotificationEvent(BaseModel):
 load_dotenv()
 
 app = FastAPI()
-logger = logging.getLogger("gunicorn.error")
+logger = logging.getLogger("gunicorn.info")
 
 
 @app.on_event("startup")
