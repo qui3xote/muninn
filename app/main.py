@@ -61,7 +61,7 @@ def startup_event():
 
     muninn_listener_url = os.environ.get("MUNINN_LISTENER_URL")
     private_key, public_key = app.state.mastodon.push_subscription_generate_keys()
-    logger.info(f"Got subscription_keys:{subscription_keys}")
+    logger.info(f"Got subscription_keys")
 
     result = app.state.mastodon.push_subscription_set(
         muninn_listener_url, public_key, follow_events=True, mention_events=True
