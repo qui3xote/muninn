@@ -49,6 +49,8 @@ logger = logging.getLogger("gunicorn.info")
 
 @app.on_event("startup")
 def startup_event():
+    logger.info(f"Starting up muninn app.")
+
     app.state.mastodon = Mastodon(
         access_token=os.environ.get("ACCESS_TOKEN"),
         api_base_url=os.environ.get("API_BASE_URL"),
@@ -61,7 +63,7 @@ def startup_event():
     subscription_keys = app.state.mastodon.push_subscription_generate_keys()
     logger.info(f"Got subscription_keys:{subscription_keys}")
 
-    result = app.state.push_subscription_set(
+    result = app.state.mastodon.push_subscription_set(
         muninn_listener_url, subscription_keys, follow_events=True, mention_events=True
     )
     logger.info(f"Subscription result:{result}")
@@ -83,10 +85,10 @@ def root(event: AccountCreatedEvent, request: Request):
         + f" Welcome to {app.state.instance_name}! I'm your friendly welcome bot, Muninn. \n"
         "Don't forget to set up your profile and write an #introduction post. \n"
         f"Reach out to our admin, {app.state.admin_account_name}, if you have any questions or concerns. \n"
-        f"New to Mastodon? Here's a quick getting started guide: {app.stateonboarding_link}"
+        f"New to Mastodon? Here's a quick getting started guide: {app.state.onboarding_link}"
     )
 
-    mastodon.status_post(message, visibility="direct")
+    app.state.mastodon.status_post(message, visibility="direct")
 
     return {"message": f"Sent welcome message to {account_id}."}
 
