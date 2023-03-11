@@ -6,6 +6,9 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from mastodon import Mastodon
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
+
 
 
 class Account(BaseModel):
@@ -44,7 +47,12 @@ class NotificationEvent(BaseModel):
 load_dotenv()
 
 app = FastAPI()
+
 logger = logging.getLogger("gunicorn.info")
+chatbot = ChatBot("MyChatbot")
+trainer = ChatterBotCorpusTrainer(chatbot)
+trainer.train("chatterbot.corpus.english")
+
 
 
 @app.on_event("startup")
@@ -96,5 +104,6 @@ def root(event: AccountCreatedEvent, request: Request):
 
 @app.post("/listener")
 def notification(event: NotificationEvent):
-    logger.info(f"received:{event.json()}")
-    return {"message": f"Received {event.json()}"}
+    if event.notification.type = "mention"
+        response = chatbot.get_response(event.notification.status.text)
+        return {"message": f"{response}"}
