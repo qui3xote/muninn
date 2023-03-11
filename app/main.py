@@ -48,7 +48,7 @@ async def lifespan():
     
     muninn_listener_url = os.environ.get("MUNINN_LISTENER_URL")
     subscription_keys = app.state.mastodon.push_subscription_generate_keys()
-    logger.info(f"Got subscription_keys:{subscription_keys)}")
+    logger.info(f"Got subscription_keys:{subscription_keys}")
 
     result = app.state.push_subscription_set(
         muninn_listener_url, 
